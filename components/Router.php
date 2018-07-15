@@ -17,12 +17,21 @@ class Router
     }
     public function run()
     {
+        $uri = $this->getURI();
         foreach ($this->routes as $uriPattern => $path)
         {
-            var_dump($uriPattern);
-            var_dump($uri);
-            if (preg_match("~$uriPattern~", $uri)){
-                echo $path;
+            if (preg_match("~$uriPattern~", $uri)) {
+                $segments = explode('/', $path);
+                $controllerName = ucfirst(array_shift($segments).'Controller');
+                $actionName = 'action'.ucfirst(array_shift($segments));
+                $controllerFile = ROOT . '/controllers/' . $controllerName . '.php';
+                if (file_exists($controllerFile)) {
+                    include_once($controllerFile);
+                }
+                $controllerObject = new $controllerName;
+                if ($controllerObject->$actionName()) {
+                    break;
+                }
             }
         }
     }
