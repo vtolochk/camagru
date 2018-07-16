@@ -2,7 +2,7 @@
 
 class EnrollmentController {
 	public function actionIndex() {
-		echo 'enrollment page';
+		require_once(ROOT . '/views/enrollment.php');
 		return true;
 	}
 }
