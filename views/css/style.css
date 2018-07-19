@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    height: 20vh;
+    border: 2px solid red;
+    background-image: url("/Users/vtolochk/Desktop/camagru/views/css/header_background.jpg");
+}
+
+.navigation {
+    border: 2px solid yellowgreen;
+    background-image: url("header_background.jpg");
+  
+}
+
+.main {
+    height: 75vh;
+    border: 2px solid blue;
+}
+
+.footer {
+    height: 5vh;
+    border: 2px solid violet;
+}
