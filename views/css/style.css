@@ -1,26 +1,73 @@
 body {
     margin: 0;
+    background-image: url("/views/images/body.jpeg");
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
 }
 
-.header {
+.Hcontainer {
+    border: 1px solid gold;
     display: flex;
-    height: 20vh;
-    border: 2px solid red;
-    background-image: url("/Users/vtolochk/Desktop/camagru/views/css/header_background.jpg");
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
-.navigation {
-    border: 2px solid yellowgreen;
-    background-image: url("header_background.jpg");
-  
+.description {
+    padding-top: 2vh;
+    height: 15vh;
+    flex-basis: 75vw;
+    overflow-y: hidden;
+    text-align:center; 
+    font-family: "Rubik";
+    color: goldenrod;
 }
 
-.main {
-    height: 75vh;
-    border: 2px solid blue;
+.buttonsOrInfo {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 5vw;
 }
 
-.footer {
-    height: 5vh;
-    border: 2px solid violet;
+.signin {
+    margin-right: 10px;
+}
+
+#signUp, #signIn {
+    font-family: "Rubik";
+    font-size: 16px;
+    text-align: center;
+    opacity: 0.6;
+    transition: 0.4s;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #3399ff;
+}
+
+#signUp:hover, #signIn:hover {
+    opacity: 1;
+}
+
+.photos {
+    width: 100vw;
+    border: 1px solid red;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: stretch;
+}
+.main1 {
+    border: 1px solid saddlebrown;
+}
+
+.main2 {
+    border: 1px solid seagreen;
+}
+
+.main3 {
+    border: 1px solid aqua;
 }
