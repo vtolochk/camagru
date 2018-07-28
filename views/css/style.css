@@ -4,6 +4,8 @@ header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 100%;
+    position: fixed;
+    width: 100%;
 }
 
 .banner {
@@ -56,7 +58,7 @@ body {
 .main {
     display: grid;
     grid-template-columns: 1fr; 
-    height: 85%;
+    height: 90%;
 }
 
 .join {
