@@ -6,29 +6,22 @@
     <link href="/views/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="Hcontainer">
-            <div class="description">
-                <h2>Welcome to camagru web app! It is a simple web apllication for creating photos with stickers.</h2>
-            </div>
-            <div class="buttonsOrInfo">
-                <div class="signin">
-                    <button id="signIn">Sign in</button>
-                </div>
-                <div class="signup">
-                    <button id="signUp">Sign up</button>
-                </div>
-            </div>
-            <div class="Photos">
-                <div class="main1">
-                    <p>Some photos will be here soon</p>
-                </div>
-                <div class="main2">
-                    <p>Some photos will be here soon</p>
-                </div>
-                <div class="main3">
-                    <p>Some photos will be here soon</p>
-                </div>
+    <header>
+        <div class="banner">
+          <h3>Educational project by UNIT Factory</h3>
         </div>
+       <div class="navbar">
+            <a href="#">Latest photos</a>
+            <button>Sign In</button>
+       </div>
+    </header>
+    <div class="main">
+        <div class="join">
+            <img src="https://www.rd.com/wp-content/uploads/2016/02/02-friends-make-you-more-attractive.jpg" alt="Loading ...">
         </div>
+    </div>
+    <footer>
+        <p>© 2018 by vtolochk. Proudly created with PHP and JavaScript.</p>
+    </footer>
 </body>
 </html>
