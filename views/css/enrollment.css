@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+} 
+
+.enrollment-wrapper {
+    background-color: #363636;
+    width: 100%;
+    height: 95%;
+}
+
+.sign-in-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    margin-top: 25%;
+   font-family: "Avenir Next W02",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color: #ABA9AA;
+}
+
+.sign-in-wrapper p, a, input {
+    all: unset;
+}
+
+input {
+    border: 0.1px solid #00D5B6;
+    color: white;
+    padding: 8px;
+    width: 160px;
+}
+
+#sign-up-a, .forgot-pass {
+    transition: 0.3s;
+}
+
+#sign-up-a:hover {
+    cursor: pointer;
+    color: white;
+    text-decoration: underline;
+}
+
+.forgot-pass:hover{
+    cursor: pointer;
+    color: white;
+    text-decoration: underline;
+}
+
+.input-name {
+    padding: 10px;
+}
+
+
+.form-wrapper {
+    width: 200px;
+}
+
+.login-button {
+    background-color: #00D5B6;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 128px;
+    font-size: 16px;
+    opacity: 0.8;
+    transition: 0.3s;
+    outline: 0;
+}
+
+.login-button:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.form-wrapper form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

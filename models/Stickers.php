@@ -4,7 +4,7 @@ class Stickers
 {
 	public static function getStickers() {
 		//work with data bases
-		$test = Db::getConnection();
+		$test = Database::getConnection();
 		return $test;
 	}
 }

@@ -4,7 +4,6 @@ header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 100%;
-    position: fixed;
     width: 100%;
 }
 
@@ -13,16 +12,27 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 24px;
+    text-align: center;
 }
 
-.navbar {
+.banner div:hover {
+    color: rgb(243, 187, 68);
+    cursor: pointer;
+}
+
+.banner a {
+    all: unset;
+}
+
+.header-button {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
 }
 
-.navbar button {
+.header-button button {
     background-color: #00D5B6;
     border: none;
     color: white;
@@ -33,64 +43,26 @@ header {
     font-size: 12px;
     opacity: 0.8;
     transition: 0.3s;
+    outline: 0;
 }
 
-.navbar button:hover {
+.header-button button:hover {
     opacity: 1;
+    cursor: pointer;
 }
 
-.navbar a {
+.header-button a {
     transition: 0.3s;
     text-decoration: none;
     color: #FFFFFF;
 }
 
-.navbar a:hover {
-   
+.header-button a:hover {
     color: #0E9E84;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.main {
-    display: grid;
-    grid-template-columns: 1fr; 
-    height: 90%;
-}
-
-.join {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    border: 2px solid black;
-}
-
-.join img {
-    width: 100%;
-    height: 100%;
-}
-
-
-footer {
-    height: 5%;
-    color: #ABA9AA;
-    background-color: #363636;
-}
-
-footer p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
 
 @media only screen and (max-width: 414px) {
-    .banner {
-        display: none;
-    }
     header {
         grid-template-columns: 1fr;
     }
