@@ -7,10 +7,10 @@
 	<title>Document</title>
 </head>
 <body>
-		<?php foreach ($stickers as $sticker):?>
+		<?php //foreach ($stickers as $sticker):?>
 			<h1>Make photo page</h1>
 			<p><?php echo $sticker;?></p> 
 			<br>
-		<?php endforeach;?>
+		<?php// endforeach;?>
 </body>
 </html>
