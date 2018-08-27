@@ -30,7 +30,7 @@
 				</a>
 			</div>
 	
-			<div class="sing-up-wrapper">
+			<div class="sign-up-wrapper">
 				<p id="text">Don't have an account?</p>
 				<div id="sign-up">Sign Up</div>
 			</div>
@@ -53,10 +53,11 @@
 					<input class="login-button" type="submit" value="Sign In" required>
 				</form>
 				<div id='passwords-doesnt-match' class='fade-in fade-out'>Passwords does not match.</div>
+				
 			</div>
 		</div>
 	</div>
 	<?php include 'footer.php';?>
-	<script src="/views/js/signUp.js"></script>
+	<script src="/views/js/enrollment.js"></script>
 </body>
 </html>

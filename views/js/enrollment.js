@@ -7,10 +7,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let text = document.getElementById('text')
         let signUp = document.getElementById('sign-up')
         let wrapper = document.getElementsByClassName('sign-in-wrapper')
-    
+       
        
         if (button[0].value === 'Sign In') {
-            wrapper[0].classList.add('big-margin-top')
             let input = document.getElementById('email-input')
             input.required = true;
             input = document.getElementById('re-pass-input')
@@ -24,8 +23,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
             for (let i = 0; i < form.children.length; i++) {
                     form.children[i].classList.remove('disappear')
             }
+
         } else {
-            wrapper[0].classList.remove('big-margin-top')
+            let passDoesntMatch = document.getElementById('passwords-doesnt-match')
+            let passInput = document.getElementById('pass-input')
+            passDoesntMatch.style.visibility = 'hidden'
+            passDoesntMatch.style.opacity = '0'
+            passInput.classList.remove('error')
+          
             let email = document.getElementById('email-div')
             email.classList.add('disappear')
             email = document.getElementById('email-input')

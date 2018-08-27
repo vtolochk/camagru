@@ -28,7 +28,7 @@ html {
     position: absolute;
     width: 100%;
     height: 400px;
-    margin-top: 15%;
+    margin-top: 150px;
     font-family: "Comic Sans MS", sans-serif;
     color: #ABA9AA;
 }
@@ -44,7 +44,7 @@ input {
     width: 160px;
 }
 
-.sing-up-wrapper {
+.sign-up-wrapper {
     display: flex;
     justify-content: center;
     flex-wrap: nowrap;
@@ -146,10 +146,6 @@ input:hover {
     border: 1px solid rgb(253, 75, 75);
 }
 
-.big-margin-top {
-    margin-top: 20%;
-}
-
 #passwords-doesnt-match {
     opacity: 0;
     visibility: hidden;
@@ -160,6 +156,9 @@ input:hover {
 
 @media only screen and (max-width:425px) {
     .banner {
-        margin-top: 50%;
+        display: none;
+    }
+    .sign-in-wrapper {
+        margin-top: 70px;
     }
 }
