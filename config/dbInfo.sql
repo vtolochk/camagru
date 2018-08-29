@@ -1,8 +1,16 @@
-create database camagru;
-use camagru;
-create table users (user_id int(11) not null, user_login text not null, user_email text not null, user_password text not null);
-insert into users (user_id, user_login, user_email, user_password) values
-(1, 'vtolochk', 'test@i.ua', 'vtolochk'),
-(2, 'login2', 'test@gmail.com', '123456'),
-(3, 'login3', 'vtl@gmail.com', '00000'),
-(4, 'login4', 'kaka@gmail.com','333333');
+CREATE DATABASE IF NOT EXISTS `camagru` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE `camagru`;
+
+CREATE TABLE IF NOT EXISTS users
+(id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+login varchar(255) NOT NULL,
+email varchar(255) NOT NULL, 
+password varchar(255) NOT NULL, 
+confirm tinyint(1) NOT NULL DEFAULT '0');
+
+INSERT INTO users (login, email, password, confirm) 
+VALUES
+('test1', 'test1@gmail.com', 'test1', true),
+('test2', 'test2@gmail.com', 'test2', false),
+('test3', 'test3@gmail.com', 'test3', true);

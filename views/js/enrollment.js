@@ -1,14 +1,18 @@
-document.addEventListener("DOMContentLoaded", function(event) { 
+let forgotPass = document.getElementsByClassName('forgot-pass')
+let form = document.getElementById('sign-in-form')
+let button = document.getElementsByClassName('login-button')
+let text = document.getElementById('text')
+let signUp = document.getElementById('sign-up')
+let wrapper = document.getElementsByClassName('sign-in-wrapper')
 
+let loginInput = document.getElementById('login-input')
+let emailInput = document.getElementById('email-input')
+let passInput = document.getElementById('pass-input')
+let rePassInput = document.getElementById('re-pass-input')
+let errorDiv = document.getElementById('error')
+
+document.addEventListener("DOMContentLoaded", function(event) { 
     function toggleRegistrationForm () {
-        let forgotPass = document.getElementsByClassName('forgot-pass')
-        let form = document.getElementById('sign-in-form')
-        let button = document.getElementsByClassName('login-button')
-        let text = document.getElementById('text')
-        let signUp = document.getElementById('sign-up')
-        let wrapper = document.getElementsByClassName('sign-in-wrapper')
-       
-       
         if (button[0].value === 'Sign In') {
             let input = document.getElementById('email-input')
             input.required = true;
@@ -16,17 +20,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
             input.required = true;
             text.innerHTML = 'Already registered?'
             signUp.innerHTML = 'Sign In'
-            form.action = 'register'
+            form.action = 'signup'
             button[0].style.marginTop = '25px'
             button[0].value = 'Sign Up'
             forgotPass[0].style.display = 'none'
             for (let i = 0; i < form.children.length; i++) {
                     form.children[i].classList.remove('disappear')
             }
-
         } else {
-            let passDoesntMatch = document.getElementById('passwords-doesnt-match')
-            let passInput = document.getElementById('pass-input')
+            let passDoesntMatch = document.getElementById('error')
             passDoesntMatch.style.visibility = 'hidden'
             passDoesntMatch.style.opacity = '0'
             passInput.classList.remove('error')
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
             text.innerHTML = "Don't have an account?"
             signUp.innerHTML = 'Sign Up'
-            form.action = 'register'
+            form.action = 'signin'
             button[0].style.marginTop = '0px'
             button[0].value = 'Sign In'
             forgotPass[0].style.display = 'block'
@@ -53,33 +55,71 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }   
 
     document.getElementById('sign-up').addEventListener('click', toggleRegistrationForm)
-    document.getElementById('pass-input').addEventListener("change", checkPasswords);
-    document.getElementById('re-pass-input').addEventListener("change", checkPasswords);
+    document.getElementById('sign-in-form').addEventListener("submit", function (event) {
+        event.preventDefault();
+        sendRequest();
+      });
 })
 
+function getData(text) {
+    let i = 0
+    let obj = JSON.parse(text)
 
-function checkPasswords() {
-    if (!document.getElementById('re-pass-input').classList.contains('disappear')) {
-        let form = document.getElementById('sign-in-form')
-        let passInput = document.getElementById('pass-input')
-        let rePassInput = document.getElementById('re-pass-input')
-        let warningMessage = document.getElementById('passwords-doesnt-match')
-
-        if (passInput.value == rePassInput.value) {
-            passInput.classList.remove('error')
-            rePassInput.classList.remove('error')
-            passInput.classList.add('success')
-            rePassInput.classList.add('success')
-            warningMessage.style.visibility = 'hidden'
-            warningMessage.style.opacity = '0'
-          } else {
-            warningMessage.style.visibility = 'visible'
-            warningMessage.style.opacity = '1'
-            passInput.classList.remove('success')
-            rePassInput.classList.remove('success')
-            passInput.classList.add('error')
-            rePassInput.classList.add('error')
-            return false
-          }
+    while (obj[i] === '') {
+        i++
+    }
+    if (i === obj.length) {
+        showSuccess()
+    } else {
+        showErrors(obj[i], i)
     }
 }
+
+function sendRequest() {
+    let form = document.getElementById('sign-in-form')
+    var XHR = new XMLHttpRequest()
+    var formData = new FormData(form)
+    XHR.addEventListener("load", function(event) {
+      getData(event.target.responseText)
+    })
+    XHR.open("POST", "/signup");
+    XHR.send(formData)
+  }
+
+  function showSuccess () {
+    removeErrorClass()
+    addSuccessClass()
+    errorDiv.style.visibility = 'hidden'
+    errorDiv.style.opacity = '0'
+  }
+
+  function showErrors (obj, i) {
+    if (i === 0) {
+        removeErrorClass()
+        loginInput.classList.add('error')
+    } else if (i === 1) {
+        removeErrorClass()
+        emailInput.classList.add('error')
+    } else if (i === 2) {
+        removeErrorClass()
+        passInput.classList.add('error')
+        rePassInput.classList.add('error')
+    }
+    errorDiv.style.visibility = 'visible'
+    errorDiv.style.opacity = '1'
+    errorDiv.innerHTML = obj
+  }
+
+  function addSuccessClass() {
+    loginInput.classList.add('success')
+    emailInput.classList.add('success')
+    passInput.classList.add('success')
+    rePassInput.classList.add('success')
+  }
+
+  function removeErrorClass() {
+    loginInput.classList.remove('error')
+    emailInput.classList.remove('error')
+    passInput.classList.remove('error')
+    rePassInput.classList.remove('error')
+  }

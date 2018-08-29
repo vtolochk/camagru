@@ -14,9 +14,9 @@
 </head>
 <body>
 	<?php 
-		if (isset($_POST['login'])) {
-			print_r($_POST);
-		}
+		// if (isset($_POST['login'])) {
+		// 	print_r($_POST);
+		// }
 	
 	?>
 	<div class="enrollment-wrapper">
@@ -35,7 +35,7 @@
 				<div id="sign-up">Sign Up</div>
 			</div>
 			<div class="form-wrapper">
-				<form method="post" action="" id="sign-in-form" name="enrollment-form" onsubmit="return checkPasswords()">
+				<form method="post" action="signin" id="sign-in-form" name="enrollment-form">
 
 					<div class="input-name" id="login-div">Login</div>
 					<input type="text" name="login" id="login-input" required>
@@ -47,12 +47,12 @@
 					<input type="password" name="password" id="pass-input" required >
 
 					<div class="input-name disappear" id="re-pass-div">Retype password</div>
-					<input class="disappear" type="password" name="password" id="re-pass-input">
+					<input class="disappear" type="password" name="repassword" id="re-pass-input">
 
 					<div class='input-name forgot-pass'>Forgot my password</div>
 					<input class="login-button" type="submit" value="Sign In" required>
 				</form>
-				<div id='passwords-doesnt-match' class='fade-in fade-out'>Passwords does not match.</div>
+				<div id='error' class='fade-in fade-out'></div>
 				
 			</div>
 		</div>
