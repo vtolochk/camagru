@@ -14,9 +14,12 @@
 </head>
 <body>
 	<?php 
-		// if (isset($_POST['login'])) {
-		// 	print_r($_POST);
-		// }
+		if (isset($_SESSION['user_id'])) {
+			echo 'YOU LOGGED IN';
+		} else {
+			echo 'YOU ARE NOT LOGGED IN';
+		}
+		var_dump( $_SESSION['user_id']);
 	
 	?>
 	<div class="enrollment-wrapper">

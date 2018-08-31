@@ -14,6 +14,7 @@ let errorDiv = document.getElementById('error')
 document.addEventListener("DOMContentLoaded", function(event) { 
     function toggleRegistrationForm () {
         if (button[0].value === 'Sign In') {
+        
             let input = document.getElementById('email-input')
             input.required = true;
             input = document.getElementById('re-pass-input')
@@ -61,10 +62,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       });
 })
 
-function getData(text) {
+function validateRegister(text) {
     let i = 0
     let obj = JSON.parse(text)
-
     while (obj[i] === '') {
         i++
     }
@@ -75,14 +75,25 @@ function getData(text) {
     }
 }
 
+function validateLogin(text) {
+    console.log(text)
+    //window.location.href = '/';
+}
+
 function sendRequest() {
     let form = document.getElementById('sign-in-form')
+    let action = form.action.split('/')
+    action = action[action.length - 1]
     var XHR = new XMLHttpRequest()
     var formData = new FormData(form)
     XHR.addEventListener("load", function(event) {
-      getData(event.target.responseText)
+        if (action === 'signup') {
+            validateRegister(event.target.responseText)
+        } else {
+            validateLogin(event.target.responseText)
+        }
     })
-    XHR.open("POST", "/signup");
+    XHR.open("POST", action);
     XHR.send(formData)
   }
 
@@ -91,6 +102,22 @@ function sendRequest() {
     addSuccessClass()
     errorDiv.style.visibility = 'hidden'
     errorDiv.style.opacity = '0'
+    removeEverything();
+  }
+
+  function removeEverything() {
+      let forHome = document.getElementsByClassName('sign-up-wrapper')
+      let form = document.getElementsByClassName('form-wrapper')
+      let home = document.createElement('a');
+      home.classList.add('homeA')
+      home.href = '/'
+      form[0].style.display = 'none'
+      signUp.style.display = 'none'
+      text.innerHTML = 'To finish the registration confirm you email via link that was send to your email.'
+      text.style.textAlign = 'center'
+      home.innerHTML = 'Home page'
+      forHome[0].classList.add('afterRegister')
+      forHome[0].appendChild(home)
   }
 
   function showErrors (obj, i) {

@@ -82,6 +82,7 @@ input:hover {
 
 .form-wrapper {
     width: 300px;
+    transition: 0.3s;
 }
 
 .login-button {
@@ -151,10 +152,31 @@ input:hover {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
+    text-align: center;
     transition: visibility 1s, opacity 0.5s linear;
     margin-top: 20px;
     width: 300px;
     color: rgb(253, 75, 75);
+}
+
+.afterRegister {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.homeA {
+    text-align: center;
+    all: unset;
+    transition: 0.4s;
+    margin-top: 20px;
+}
+
+.homeA:hover {
+    color:#00D5B6;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 @media only screen and (max-width:425px) {
