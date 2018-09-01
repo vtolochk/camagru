@@ -12,17 +12,8 @@
 </head>
 <body>
    <?php include 'header.php';?>
-   <?php 
-		if (isset($_SESSION['user_id'])) {
-			echo 'YOU LOGGED IN';
-		} else {
-			echo 'YOU ARE NOT LOGGED IN';
-		}
-		var_dump( $_SESSION['user_id']);
-	
-	?>
     <div class="main">
-        
+    
     </div>
     <?php include 'footer.php';?>
 </body>

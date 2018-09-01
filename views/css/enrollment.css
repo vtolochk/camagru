@@ -179,6 +179,18 @@ input:hover {
     text-decoration: underline;
 }
 
+#loginError {
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+    transition: visibility 1s, opacity 0.5s linear;
+    margin-top: 20px;
+    width: 300px;
+    color: rgb(253, 75, 75);
+}
+
 @media only screen and (max-width:425px) {
     .banner {
         display: none;

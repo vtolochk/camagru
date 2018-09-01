@@ -74,8 +74,30 @@ header {
     font-size: 1.6em;
 }
 
+#hello {
+    font-size: 20px;
+    text-align: center;
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9AA;
+}
+
+#banner-a {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    transition: 0.4s;
+}
+
+#banner-a:hover { 
+    color: #00D5B6;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 425px) {
     header {
+        display: none;
         grid-template-columns: 1fr;
     }
 }

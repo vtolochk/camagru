@@ -6,8 +6,9 @@ CREATE TABLE IF NOT EXISTS users
 (id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 login varchar(255) NOT NULL,
 email varchar(255) NOT NULL, 
-password varchar(255) NOT NULL, 
-confirm tinyint(1) NOT NULL DEFAULT '0');
+password varchar(255) NOT NULL,
+confirm tinyint(1) NOT NULL DEFAULT '0',
+token varchar(255));
 
 INSERT INTO users (login, email, password, confirm) 
 VALUES

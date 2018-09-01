@@ -55,6 +55,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }   
 
+    function restorePassword () {
+        window.location.href = '/restore'
+    }
+
+    forgotPass[0].addEventListener('click', restorePassword);
     document.getElementById('sign-up').addEventListener('click', toggleRegistrationForm)
     document.getElementById('sign-in-form').addEventListener("submit", function (event) {
         event.preventDefault();
@@ -76,8 +81,15 @@ function validateRegister(text) {
 }
 
 function validateLogin(text) {
-    console.log(text)
-    //window.location.href = '/';
+    let i = 0
+    let obj = JSON.parse(text)
+    if (obj.length === undefined) {
+        window.location.href = '/';
+    } else {
+        errorDiv.style.visibility = 'visible'
+        errorDiv.style.opacity = '1'
+        errorDiv.innerHTML = obj[0]
+    }
 }
 
 function sendRequest() {

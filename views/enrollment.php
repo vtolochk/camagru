@@ -13,15 +13,13 @@
 	<title>Enrollment</title>
 </head>
 <body>
-	<?php 
+	<?php
 		if (isset($_SESSION['user_id'])) {
-			echo 'YOU LOGGED IN';
-		} else {
-			echo 'YOU ARE NOT LOGGED IN';
-		}
-		var_dump( $_SESSION['user_id']);
-	
+			echo 'Hello ' . $_SESSION['user_login']; 
 	?>
+		<a href="/logout"><button>Logout</button></a>
+
+	<?php } ?>
 	<div class="enrollment-wrapper">
 		<div class="sign-in-wrapper">
 		
@@ -32,11 +30,12 @@
 					<div id="dot">.</div>
 				</a>
 			</div>
-	
+			<?php if (!isset($_SESSION['user_id'])) { ?>
 			<div class="sign-up-wrapper">
 				<p id="text">Don't have an account?</p>
 				<div id="sign-up">Sign Up</div>
 			</div>
+
 			<div class="form-wrapper">
 				<form method="post" action="signin" id="sign-in-form" name="enrollment-form">
 
@@ -60,6 +59,7 @@
 			</div>
 		</div>
 	</div>
+		<?php } ?>
 	<?php include 'footer.php';?>
 	<script src="/views/js/enrollment.js"></script>
 </body>

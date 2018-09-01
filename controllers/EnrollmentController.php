@@ -15,7 +15,7 @@ class EnrollmentController {
 		$email = $_POST['email'];
 		$pass = $_POST['password'];
 		$repass = $_POST['repassword'];
-		
+
 		array_push($errors, User::loginVerification($login));
 		array_push($errors, User::emailVerification($email));
 		array_push($errors, User::passwordVerification($pass, $repass));
@@ -24,7 +24,8 @@ class EnrollmentController {
 			echo (json_encode($errors));
 		} else {
 			User::registerUser($_POST['login'], $_POST['email'], $_POST['password']);
-			// sent email
+			$user = User::getUserByLogin($_POST['login']);
+			User::sendConfirmationEmail($user);
 			echo (json_encode($errors));
 		}
 		return true;
@@ -34,6 +35,11 @@ class EnrollmentController {
 		$errors = User::checkLoginAndPassword($_POST['login'], $_POST['password']);
 		User::startSession($errors);
 		echo (json_encode($errors));
+		return true;
+	}
+
+	public function actionConfirm() {
+		require_once(ROOT . '/views/emailConfirmed.php');
 		return true;
 	}
 

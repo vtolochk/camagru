@@ -1,7 +1,17 @@
 <?php
 return array(
     'makephoto' => 'makephoto/index',
-    'enrollment' => 'enrollment/index',
-    'signup' => 'enrollment/signup',
-    'signin' => 'enrollment/signin'
+    
+    '^enrollment$' => 'enrollment/index',
+    '^enrollment/confirm$' => 'enrollment/confirm',
+    '^signup$' => 'enrollment/signup',
+    '^signin$' => 'enrollment/signin',
+
+    '^logout$' => 'user/logout',
+    '^settings$' => 'user/settings',
+    '^restore$' => 'user/restore',
+    '^restore(.*)$' => 'user/restore',
+    '^restore/request$' => 'user/ForgotRequest',
+    '^confirm(.*)$' => 'user/confirm'
+
 );

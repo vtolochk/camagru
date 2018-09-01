@@ -11,6 +11,8 @@ class User {
             $error = 'Login too long (max 24 symbols).';
         } else if (!preg_match('/^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/', $login)) {
             $error = 'Login contains forbidden symbols.';
+        } else if (User::getUserByLogin($login)) {
+            $error = "Login has already engaged.";
         }
         return $error;
     }
@@ -33,35 +35,84 @@ class User {
         $error = '';
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = "Email isn't valid.";
+        } else if (User::getUserByEmail($email)) {
+           $error = "Email has already registered.";
         }
         return $error;
     }
 
     public static function registerUser($login, $email, $password) {
-        $password = password_hash($password, PASSWORD_DEFAULT);
         $db = Database::getConnection();
-        $sql = 'INSERT INTO `users` (login, email, password) VALUES (:login, :email, :password)';
+        $sql = 'INSERT INTO `users` (login, email, password, token) VALUES (:login, :email, :password, :token)';
         $base = $db->prepare($sql);
+
+        $token = md5(rand(0, 1000));
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
         $base->bindParam(':login', $login, PDO::PARAM_STR);
         $base->bindParam(':email', $email, PDO::PARAM_STR);
         $base->bindParam(':password', $password, PDO::PARAM_STR);
+        $base->bindParam(':token', $token, PDO::PARAM_STR);
         $base->execute();
         return true;
     }
 
-    public static function startSession($user) {
-        echo $user['login']. "\n";
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_login'] = $user['login'];
-        var_dump($_SESSION);
+    public static function sendConfirmationEmail($user) {
+        $encoding  = "utf-8";
+        $emailSubject = "Photo Creator email verification ";
+        $subjectPreferences = array(
+            "input-charset" => $encoding,
+            "output-charset" => $encoding,
+            "line-length" => 76,
+            "line-break-chars" => "\r\n"
+        );
+        $message = '
+        <html>
+            <head>
+            </head>
+            <body>
+                <div style="text-align: center;font-family: \'Lato\', \'appleLogo\', sans-serif">
+                    <h1>Hey '.$user['login'].', thanks for signing up!</h1>
+                    <p>Your account has been created, to active it follow the url below.</p>
+                    <a href="http://localhost:8013/confirm?login='. $user['login'] . "&token=" . $user['token'] .'">Confirmation link</a>
+                </div>
+            </body>
+        </html>
+        ';
+        $emailHeader = "Content-type: text/html; charset=".$encoding." \r\n";
+        $emailHeader .= "From: Photo Creator <no-reply@photoCreator.com> \r\n";
+        $emailHeader .= "MIME-Version: 1.0 \r\n";
+        $emailHeader .= "Content-Transfer-Encoding: 8bit \r\n";
+        $emailHeader .= "Date: ".date("r (T)")." \r\n";
+        $emailHeader .= iconv_mime_encode("Subject", $emailSubject, $subjectPreferences);
+        return mail($user['email'], $emailSubject, $message, $emailHeader);
     }
 
-    public static function endSession($user) {
+    public static function confirmEmail($user) {
+        $confirm = true;
+        $login = $user['login'];
+        $db = Database::getConnection();
+        $sql = "UPDATE `users` SET confirm = :confirm WHERE login = :login";
+        $base = $db->prepare($sql);
+        $base->bindParam(":confirm", $confirm, PDO::PARAM_BOOL);
+        $base->bindParam(":login", $login, PDO::PARAM_STR);
+        return $base->execute();
+    }
+
+    public static function startSession($user) {
+        if (isset($user['id']) && isset($user['login'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_login'] = $user['login'];
+        }
+    }
+
+    public static function endSession() {
         unset($_SESSION['user_id']);
 		unset($_SESSION['user_login']);
     }
 
     public static function checkLoginAndPassword($login, $password) {
+        $errors = [];
         $db = Database::getConnection();
         $request = 'SELECT * FROM `users` WHERE login = :login';
         $result = $db->prepare($request);
@@ -70,14 +121,93 @@ class User {
         $result->execute();
         $data = $result->fetch();
         if (!$data) {
-            $data = 'Invalid login';
+            array_push( $errors, 'Invalid login');
         }
         else if (!password_verify($password, $data['password'])) {
-            $data = 'Invalid password';
+            array_push( $errors, 'Invalid password');
         } else if (!$data['confirm']) {
-            $data = 'You need to confirm your email.';
+            array_push( $errors, 'You need to confirm your email.');
+        }
+        if (count(array_filter($errors)) > 0) {
+            return $errors;
         }
         return $data;
+    }
+
+    public static function getUserByLogin($login) {
+        $db = Database::getConnection();
+        $request = 'SELECT * FROM `users` WHERE login = :login';
+        $result = $db->prepare($request);
+        $result->bindParam(':login', $login, PDO::PARAM_STR);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $data = $result->fetch();
+        return $data;
+    }
+
+    public static function getUserByEmail($email) {
+        $db = Database::getConnection();
+        $request = 'SELECT * FROM `users` WHERE email = :email';
+        $result = $db->prepare($request);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $data = $result->fetch();
+        return $data;
+    }
+
+    public static function sendRestorePasswordEmail($email) {
+        $error = '';
+        $user = User::getUserByEmail($email);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Email isn't valid.";
+        } else if (!$user['confirm']) {
+           $error = "Email hasnt registered yet.";
+        } else {
+            //generate new token
+            $token = md5(rand(0, 1000));
+
+            // write token to data base
+            $confirm = true;
+            $login = $user['login'];
+            $db = Database::getConnection();
+            $sql = "UPDATE `users` SET token = :token WHERE email = :email";
+            $base = $db->prepare($sql);
+            $base->bindParam(":token", $token, PDO::PARAM_BOOL);
+            $base->bindParam(":email", $email, PDO::PARAM_STR);
+            $base->execute();
+
+            // sent email
+            $encoding  = "utf-8";
+            $emailSubject = "Photo Creator restore password";
+            $subjectPreferences = array(
+                "input-charset" => $encoding,
+                "output-charset" => $encoding,
+                "line-length" => 76,
+                "line-break-chars" => "\r\n"
+            );
+            $message = '
+            <html>
+                <head>
+                </head>
+                <body>
+                    <div style="text-align: center;font-family: \'Lato\', \'appleLogo\', sans-serif">
+                        <h1>Hey '.$user['login'].', we recieved you forgot password request!</h1>
+                        <p>To get a new password go via link below.</p>
+                        <a href="http://localhost:8013/restore?email='. $user['email'] . "&token=" . $token .'">Confirmation link</a>
+                    </div>
+                </body>
+            </html>
+            ';
+            $emailHeader = "Content-type: text/html; charset=".$encoding." \r\n";
+            $emailHeader .= "From: Photo Creator <no-reply@photoCreator.com> \r\n";
+            $emailHeader .= "MIME-Version: 1.0 \r\n";
+            $emailHeader .= "Content-Transfer-Encoding: 8bit \r\n";
+            $emailHeader .= "Date: ".date("r (T)")." \r\n";
+            $emailHeader .= iconv_mime_encode("Subject", $emailSubject, $subjectPreferences);
+            mail($user['email'], $emailSubject, $message, $emailHeader);
+        }
+        return $error;
     }
 
     // public static function getAllUsers() {
