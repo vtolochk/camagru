@@ -9,6 +9,7 @@ return array(
 
     '^logout$' => 'user/logout',
     '^settings$' => 'user/settings',
+    '^settings/save$'=> 'user/SaveSettings',
     '^restore$' => 'user/restore',
     '^restore(.*)$' => 'user/restore',
     '^restore/request$' => 'user/ForgotRequest',

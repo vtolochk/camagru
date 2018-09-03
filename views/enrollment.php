@@ -15,7 +15,7 @@
 <body>
 	<?php
 		if (isset($_SESSION['user_id'])) {
-			echo 'Hello ' . $_SESSION['user_login']; 
+			echo 'Hello ' . $_SESSION['user_login'];
 	?>
 		<a href="/logout"><button>Logout</button></a>
 

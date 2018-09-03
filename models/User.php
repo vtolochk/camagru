@@ -7,8 +7,8 @@ class User {
         $len = strlen($login);
         if ($len < 4) {
             $error = 'Login too short (min 4 symbols).';
-        } else if ($len > 24) {
-            $error = 'Login too long (max 24 symbols).';
+        } else if ($len > 14) {
+            $error = 'Login too long (max 14 symbols).';
         } else if (!preg_match('/^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/', $login)) {
             $error = 'Login contains forbidden symbols.';
         } else if (User::getUserByLogin($login)) {
@@ -208,6 +208,42 @@ class User {
             mail($user['email'], $emailSubject, $message, $emailHeader);
         }
         return $error;
+    }
+
+    public static function setLogin($id, $login) {
+        $db = Database::getConnection();
+        $sql = "UPDATE `users` SET login = :login WHERE id = :id";
+        $base = $db->prepare($sql);
+        $base->bindParam(":id", $id, PDO::PARAM_BOOL);
+        $base->bindParam(":login", $login, PDO::PARAM_STR);
+        $base->execute();
+    }
+
+    public static function setEmail($id, $email) {
+        $db = Database::getConnection();
+        $sql = "UPDATE `users` SET email = :email WHERE id = :id";
+        $base = $db->prepare($sql);
+        $base->bindParam(":id", $id, PDO::PARAM_BOOL);
+        $base->bindParam(":email", $email, PDO::PARAM_STR);
+        $base->execute();
+    }
+
+    public static function setPassword($id, $password) {
+        $db = Database::getConnection();
+        $sql = "UPDATE `users` SET password = :password WHERE id = :id";
+        $base = $db->prepare($sql);
+        $base->bindParam(":id", $id, PDO::PARAM_BOOL);
+        $base->bindParam(":password", $password, PDO::PARAM_STR);
+        $base->execute();
+    }
+
+    public static function setNotisfications($id, $notif) {
+        $db = Database::getConnection();
+        $sql = "UPDATE `users` SET notisfications = :notif WHERE id = :id";
+        $base = $db->prepare($sql);
+        $base->bindParam(":id", $id, PDO::PARAM_BOOL);
+        $base->bindParam(":notif", $notif, PDO::PARAM_STR);
+        $base->execute();
     }
 
     // public static function getAllUsers() {

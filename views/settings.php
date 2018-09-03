@@ -6,36 +6,61 @@
      <link href="/views/css/settings.css" rel="stylesheet">
 </head>
 <body> 
-   <?php include 'header.php'; // to hide this page of not logged in user need to check sessing is set or not?>
+   <?php 
+    if (isset($_SESSION['user_id'])) {
+        include 'header.php';
+   ?>
     <div class="settings-wrapper">
-        <form method="post">
-            <div class="header">Settings</div>
+        <form method="post" id='settings-form'>
+            <div class="header center">Settings</div>
+            <div class="center">
             <div class="inputs-wrapper">
                 <div class="grid-wrapper">
                     <p>Your login:</p>
-                    <input type="text" name="login">
-                    <input class="button" type="submit" value="Change">
+                    <input class="input-field" type="text" name="login"  value=<?php echo $user['login'];?> required>
                 </div>
                 <div class="grid-wrapper">
                     <p>Your email:</p>   
-                    <input type="text" name="login">
-                    <input class="button" type="submit" value="Change">
+                    <input class="input-field" type="text" name="email" value=<?php echo $user['email'];?> required>
                 </div>
                 <div  class="grid-wrapper">
                     <p>Old password:</p>
-                    <input type="text" name="login">
+                    <input class="input-field" type="password" name="old_password">
                 </div>
                 <div  class="grid-wrapper">
                     <p>New password:</p>
-                    <input type="text" name="login">
-                    <input class="button" type="submit" value="Change">
+                    <input class="input-field" type="password" name="new_password">
                 </div>
                 <div  class="grid-wrapper">
-                    <p>Notifications </p>
+                    <p>Notifications</p>
+                      <div class="center">
+                        <input id="on" type="radio" value="1" name='notisfications'  
+                        <?php if ($user['notisfications']) {
+                            echo 'checked';
+                        }
+                        ?>>
+                        <p>On</p>
+                        <input id="off" type="radio" name='notisfications' value="0"
+                        <?php if (!$user['notisfications']) {
+                            echo 'checked';
+                        }
+                        ?>
+                        ><p>Off</p>
+                      </div>
                 </div>
+                <div class="center">
+                    <input class="button" type="submit" value="Save">
+                </div>
+                <div id='error'></div>
+            </div>
             </div>
         </form>
+       
     </div>
-    <?php include 'footer.php';?>
+    <?php  } else {
+        include '404.php';
+    } 
+    include 'footer.php';?>
+    <script src="/views/js/settings.js"></script>
 </body>
 </html>

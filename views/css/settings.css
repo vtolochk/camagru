@@ -29,13 +29,15 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    width: 50px;
+    width: 330px;
     font-size: 14px;
     opacity: 0.8;
     transition: 0.3s;
     outline: 0;
     align-self: center;
-    height: 20px;
+    margin-left: 0px;
+    height: 40px;
+    margin-top: 10px;
 }
 
 .button:hover {
@@ -43,29 +45,34 @@ body {
     cursor: pointer;
 }
 
-.sign-in-wrapper p, a, input {
+.sign-in-wrapper p, a {
     all: unset;
 }
 
 input {
+    outline: none;
+    border: none;
+}
+
+.input-field {
     align-self: center;
     background-color: rgba(255,255,255,0.26229508196721313);
     color: #dadada;
     padding: 8px;
     margin: 5px 5px;
     font-family: "Comic Sans MS", sans-serif;
-    height: 20px;
+    font-size: 18px;
 }
 
 .inputs-wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    margin-left: 100px;
+
 }
 
 .grid-wrapper {
     display: grid;
-    grid-template-columns: 130px 180px 50px;
+    grid-template-columns: 130px 200px;
     height: 60px;
 }
 
@@ -77,9 +84,32 @@ input {
     color: #ABA9AA;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+#on, #off{
+    align-self: center;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#error {
+    font-size: 18px;
+    font-family: "Comic Sans MS", sans-serif;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+    transition: visibility 1s, opacity 0.5s linear;
+    margin-top: 20px;
+    width: 300px;
+    color: rgb(253, 75, 75);
+}
+
 @media only screen and (max-width: 768px) {
 
-    .inputs-wrapper {
-        margin-left: 10px;
-    }
+
 }

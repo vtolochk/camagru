@@ -24,6 +24,7 @@ class Router
     }
     public function run()
     {
+        $success = 0;
         $uri = $this->getURI();
         if (!$uri)
             $this->goHome();
@@ -41,10 +42,14 @@ class Router
                     }
                     $controllerObject = new $controllerName;
                     if ($controllerObject->$actionName()) {
+                        $success = 1;
                         break;
                     }
                 }
             }
+        }
+        if (!$success) {
+            include_once(ROOT . '/views/404.php');
         }
     }
 }
