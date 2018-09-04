@@ -25,11 +25,11 @@
                 </div>
                 <div  class="grid-wrapper">
                     <p>Old password:</p>
-                    <input class="input-field" type="password" name="old_password">
+                    <input id='old_pass' class="input-field" type="password" name="old_password">
                 </div>
                 <div  class="grid-wrapper">
                     <p>New password:</p>
-                    <input class="input-field" type="password" name="new_password">
+                    <input id='new_pass' class="input-field" type="password" name="new_password">
                 </div>
                 <div  class="grid-wrapper">
                     <p>Notifications</p>
@@ -51,7 +51,7 @@
                 <div class="center">
                     <input class="button" type="submit" value="Save">
                 </div>
-                <div id='error'></div>
+                <div class='errorDiv'></div>
             </div>
             </div>
         </form>

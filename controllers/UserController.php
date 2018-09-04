@@ -14,14 +14,20 @@ class UserController {
         if ($user['token'] === $_GET['token']) {
             User::confirmEmail($user);
             Header("Location: /enrollment/confirm");
-        } // maybe need to show error here ???
+        } else {
+            require_once(ROOT . '/views/404.php');
+        }
     }
 
-    public function actionRestorePassword() {
+    public function actionPasswordRestore() {
         $user = User::getUserByEmail($_GET['email']);
         if ($user['token'] === $_GET['token']) {
-            Header("Location: /"); // settings change password in future
-        } // same question as above
+            // generate new token and write it to data base
+            require_once(ROOT . '/views/passwordRestoringForm.php');
+           
+        } else {
+            require_once(ROOT . '/views/404.php');
+        }
     }
 
     public function actionForgotRequest() {
@@ -29,6 +35,26 @@ class UserController {
         array_push($error, User::sendRestorePasswordEmail($_POST['email']));
         echo json_encode($error);
         return true;
+    }
+
+    public function actionSetNewPassword() {
+        $email = strstr($_SERVER['HTTP_REFERER'], 'email');
+        $email = explode('&', $email);
+        $email = substr($email[0], 6);
+        $error = [];
+        array_push($error, User::passwordVerification($_POST['password'], $_POST['repassword']));
+        if (count(array_filter($error)) > 0) {
+           
+        } else {
+             $user = User::getUserByEmail($email);
+             User::setPassword($user['id'], $_POST['password']);
+        }
+        echo json_encode($error);
+        return true;
+    }
+
+    public function actionCheckYourEmail () {
+        require_once(ROOT . '/views/checkYourEmail.php');
     }
 
     public function actionRestore() {
@@ -45,10 +71,9 @@ class UserController {
     }
 
     public function actionSaveSettings () {
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_id']) && !empty($_POST['login'])) {
             $errors = [];
             $user = User::getUserByLogin($_SESSION['user_login']);
-
             if ($user['login'] !== $_POST['login']) {
                 array_push($errors, User::loginVerification($_POST['login']));
                 if (count(array_filter($errors)) > 0) {
@@ -70,8 +95,8 @@ class UserController {
                 }
             }
             if ($_POST['new_password'] !== '') {
-                if ($_POST['new_password'] !== $user['password']) {
-                    array_push($errors, 'Password invalid.');
+                if (!password_verify($_POST['old_password'], $user['password'])) {
+                    array_push($errors, 'Old password invalid.');
                 }
                 array_push($errors, User::passwordVerification($_POST['new_password'], $_POST['new_password']));
                 if (count(array_filter($errors)) > 0) {
@@ -86,6 +111,7 @@ class UserController {
                 User::setNotisfications($user['id'], $_POST['notisfications']);
             }
             echo (json_encode($errors));
+            
             return true;
         } else {
             return false;

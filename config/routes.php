@@ -10,9 +10,17 @@ return array(
     '^logout$' => 'user/logout',
     '^settings$' => 'user/settings',
     '^settings/save$'=> 'user/SaveSettings',
-    '^restore$' => 'user/restore',
-    '^restore(.*)$' => 'user/restore',
-    '^restore/request$' => 'user/ForgotRequest',
-    '^confirm(.*)$' => 'user/confirm'
 
+    '^restore$' => 'user/restore',
+
+    '^restore/request$' => 'user/ForgotRequest',
+
+    '^restore/request/password-form-data$' => 'user/SetNewPassword',
+
+    '^restore/request/email$' => 'user/CheckYourEmail',
+
+    '^restore/request/password(.*)$' => 'user/PasswordRestore',
+
+    '^restore(.*)$' => 'user/restore',
+    '^confirm(.*)$' => 'user/confirm'
 );

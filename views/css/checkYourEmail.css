@@ -1,0 +1,17 @@
+.check-email-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 85%;
+    background-color: #363636;
+}
+
+h2 {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    text-align: center;
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9AA;
+}
