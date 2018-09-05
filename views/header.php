@@ -17,7 +17,9 @@
     <?php
     
 		if (isset($_SESSION['user_id'])) {
-      echo '<div id="hello">Hello, ' . $_SESSION['user_login'] . '.</div>'; ?>
+      echo '<div id="login">' . $_SESSION['user_login'] . '</div>'; ?>
+    <a href="/gallery"><button>Gallery</button></a>
+    <a href="/makephoto"><button>Make photo</button></a>
     <a href="/settings"><button>Settings</button></a>
 		<a href="/logout"><button>Logout</button></a>
 

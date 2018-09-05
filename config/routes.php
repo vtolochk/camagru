@@ -1,6 +1,6 @@
 <?php
 return array(
-    'makephoto' => 'makephoto/index',
+   
     
     '^enrollment$' => 'enrollment/index',
     '^enrollment/confirm$' => 'enrollment/confirm',
@@ -12,14 +12,13 @@ return array(
     '^settings/save$'=> 'user/SaveSettings',
 
     '^restore$' => 'user/restore',
-
     '^restore/request$' => 'user/ForgotRequest',
-
     '^restore/request/password-form-data$' => 'user/SetNewPassword',
-
     '^restore/request/email$' => 'user/CheckYourEmail',
-
     '^restore/request/password(.*)$' => 'user/PasswordRestore',
+
+    '^gallery$' => 'gallery/index',
+    '^makephoto$' => 'makephoto/index',
 
     '^restore(.*)$' => 'user/restore',
     '^confirm(.*)$' => 'user/confirm'

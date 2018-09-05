@@ -13,6 +13,7 @@ class UserController {
         $user = User::getUserByLogin($_GET['login']);
         if ($user['token'] === $_GET['token']) {
             User::confirmEmail($user);
+            User::setToken($user['id']);
             Header("Location: /enrollment/confirm");
         } else {
             require_once(ROOT . '/views/404.php');
@@ -22,7 +23,7 @@ class UserController {
     public function actionPasswordRestore() {
         $user = User::getUserByEmail($_GET['email']);
         if ($user['token'] === $_GET['token']) {
-            // generate new token and write it to data base
+            User::setToken($user['id']);
             require_once(ROOT . '/views/passwordRestoringForm.php');
            
         } else {

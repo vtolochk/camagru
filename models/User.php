@@ -247,6 +247,17 @@ class User {
         $base->execute();
     }
 
+    public static function setToken($id) {
+        $token = md5(rand(0, 1000));
+        $db = Database::getConnection();
+        $sql = "UPDATE `users` SET token = :token WHERE id = :id";
+        $base = $db->prepare($sql);
+        $base->bindParam(":id", $id, PDO::PARAM_BOOL);
+        $base->bindParam(":token", $token, PDO::PARAM_STR);
+        $base->execute();
+    }
+
+
     // public static function getAllUsers() {
     //     $db = Database::getConnection();
     //     $stmt = $db->query('SELECT * FROM users');

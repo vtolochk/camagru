@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Settings</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
      <link href="/views/css/settings.css" rel="stylesheet">
 </head>
