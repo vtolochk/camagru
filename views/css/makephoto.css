@@ -15,3 +15,50 @@ body {
     display: none;
 }
 
+#video-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.filters-wrapper {
+
+}
+
+.stickers {
+    height: 50px;
+}
+
+#photo-but, #clear-but{
+  background-color: #00D5B6;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 128px;
+    font-size: 16px;
+    opacity: 0.8;
+    transition: 0.3s;
+    outline: 0;
+}
+
+#clear-but:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#photo-but:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+

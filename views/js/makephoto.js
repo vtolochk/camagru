@@ -102,8 +102,9 @@ function sendRequest(imgUrl) {
 
     formData.append('img', imgUrl)
     formData.append('filter', video.style.filter)
+    formData.append('sticker', 'samuel.png')
     XHR.addEventListener("load", function(event) {
-        console.log('an = > ', event.target.responseText)
+        //console.log('an = > ', event.target.responseText)
         let obj = JSON.parse(event.target.responseText)
         // remove previous photo
         let prevImg = document.getElementById('photo')

@@ -35,40 +35,44 @@ class MakephotoController {
 		}
 	}
 
+	public function applySticker($img, $sticker, $image_name) {
+		// $size = getimagesize('stickers/glasses.png');
+		// $sticker_width = $size[0];
+		// $sticker_height = $size[1];
+		
+
+	//	$sticker = imagecreatefrompng('stickers/glasses.png');
+
+		//$image = imagecreatefrompng($image_name);
+
+		//  $sticker_width *= 0.2;
+		//  $sticker_height *= 0.2;
+		//  $sticker = imagescale($sticker, $sticker_width, $sticker_height);
+
+		// $transparentBg = imagecolorallocatealpha($sticker, 0, 127, 255, 127);
+		// imagefill($sticker, 0, 0, $transparentBg);
+
+		//imagecopy($img, $image, 0, 0, 0, 0, $photo_width, $photo_height);
+		//imagecopy($img, $sticker, 0, 0, 0, 0, $sticker_width, $sticker_height);
+	}
+
 	public function actionSavePhoto() {
 		if (isset($_SESSION['user_id'])) {
-			// save image
 			$dir_name = 'photos/';
 			$file_name = date('Y_m_d') . '_' . rand(1, 10000) . '.png';
+			// save simple image 
 			MakephotoController::savePhotoFromCamera($_POST['img'], $file_name, $dir_name);
-
-			// create new image with stickers
-			$size = getimagesize('stickers/glasses.png');
-			$sticker_width = $size[0];
-			$sticker_height = $size[1];
-			$size = getimagesize($dir_name . $file_name);
-			$photo_width = $size[0];
-			$photo_height = $size[1];
-			$final_image = imagecreatetruecolor($photo_width, $photo_height);
+			// create new image to apply stickers and filters
+			$final_image = imagecreatefrompng($dir_name . $file_name);
 			imagesavealpha($final_image, true);
-			$sticker = imagecreatefrompng('stickers/glasses.png');
-			$image = imagecreatefrompng($dir_name . $file_name);
-			$sticker_width *= 0.2;
-			$sticker_height *= 0.2;
-			$sticker = imagescale($sticker, $sticker_width, $sticker_height);
-			$transparentBg = imagecolorallocatealpha($sticker, 0, 127, 255, 127);
-			imagefill($sticker, 0, 0, $transparentBg);
-			imagecopy($final_image, $image, 0, 0, 0, 0, $photo_width, $photo_height);
-			imagecopy($final_image, $sticker, 0, 0, 0, 0, $sticker_width, $sticker_height);
-			
-			// apply filters
+			// apply stickers and filters
+			MakephotoController::applySticker($final_image, $_POST['sticker'], $dir_name . $file_name);
 			MakephotoController::applyFilterToPhoto($final_image, $_POST['filter']);
-			// save image
+			// save changed image
 			imagepng($final_image,  $dir_name . $file_name);
 			Photos::addNewPhoto($dir_name . $file_name, $_SESSION['user_login']);
 			// clean images
-			imagedestroy($image);
-			imagedestroy($sticker);
+			imagedestroy($final_image);
 			// sending path for javascript img tag
 			$res = ['path' => $dir_name . $file_name];
 			echo json_encode($res);
