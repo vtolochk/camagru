@@ -74,7 +74,7 @@ class User {
                 <div style="text-align: center;font-family: \'Lato\', \'appleLogo\', sans-serif">
                     <h1>Hey '.$user['login'].', thanks for signing up!</h1>
                     <p>Your account has been created, to active it follow the url below.</p>
-                    <a href="http://localhost:8013/confirm?login='. $user['login'] . "&token=" . $user['token'] .'">Confirmation link</a>
+                    <a href="http://localhost:8010/confirm?login='. $user['login'] . "&token=" . $user['token'] .'">Confirmation link</a>
                 </div>
             </body>
         </html>
@@ -194,7 +194,7 @@ class User {
                     <div style="text-align: center;font-family: \'Lato\', \'appleLogo\', sans-serif">
                         <h1>Hey '.$user['login'].', we recieved you forgot password request!</h1>
                         <p>To get a new password go via link below.</p>
-                        <a href="http://localhost:8013/restore/request/password?email='. $user['email'] . "&token=" . $token .'">Get new password</a>
+                        <a href="http://localhost:8010/restore/request/password?email='. $user['email'] . "&token=" . $token .'">Get new password</a>
                     </div>
                 </body>
             </html>

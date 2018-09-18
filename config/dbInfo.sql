@@ -11,6 +11,11 @@ notisfications tinyint(1) NOT NULL DEFAULT '1',
 confirm tinyint(1) NOT NULL DEFAULT '0',
 token varchar(255));
 
+CREATE TABLE IF NOT EXISTS photos
+(id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+path varchar(255) NOT NULL,
+owner varchar(255));
+
 INSERT INTO users (login, email, password, confirm) 
 VALUES
 ('test1', 'test1@gmail.com', '$2y$10$DN58ikL04jlGsndhA6F2S.w21CktwkAWFs757Jz4x.kHIKltegv62', true),

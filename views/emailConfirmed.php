@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Email confirmation</title>
+    <title>Email confirmed</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
    <link href="/views/css/emailConfirmed.css" rel="stylesheet">
 </head>

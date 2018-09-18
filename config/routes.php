@@ -19,7 +19,10 @@ return array(
 
     '^gallery$' => 'gallery/index',
     '^makephoto$' => 'makephoto/index',
+    '^makephoto/savePhoto$' => 'makephoto/savePhoto',
 
     '^restore(.*)$' => 'user/restore',
     '^confirm(.*)$' => 'user/confirm'
+
+    
 );

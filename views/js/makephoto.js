@@ -70,10 +70,8 @@ clearButton.addEventListener('click', function(e) {
 
 // Take picture from canvas
 function takePicture() {
-    //create canvas
     const context = canvas.getContext('2d')
     if (width && height) {
-        //set canvas props
         canvas.width = width
         canvas.height = height
         // Draw an image of the video
@@ -81,8 +79,8 @@ function takePicture() {
 
         // create an image from the canvas
         const imgUrl = canvas.toDataURL('image/png')
-
-        // Create img element
+        //console.log(imgUrl)
+        // Create an img element
         const img = document.createElement('img')
         
         //Set img src
@@ -91,7 +89,33 @@ function takePicture() {
         // Set image filter
         img.style.filter = filter
 
-        // add image to photos
-        photos.appendChild(img)
+        // send an image to php
+        sendRequest(imgUrl)
     }
 }
+
+function sendRequest(imgUrl) {
+    let div = document.getElementsByClassName('makephoto-wrapper')
+    let form = div[0].getElementsByTagName('form')
+    let XHR = new XMLHttpRequest()
+    let  formData = new FormData(form)
+
+    formData.append('img', imgUrl)
+    formData.append('filter', video.style.filter)
+    XHR.addEventListener("load", function(event) {
+        console.log('an = > ', event.target.responseText)
+        let obj = JSON.parse(event.target.responseText)
+        // remove previous photo
+        let prevImg = document.getElementById('photo')
+        if (prevImg) {
+           photos.removeChild(prevImg)
+        }
+        // add image to photos
+        let imgTag = document.createElement('img')
+        imgTag.setAttribute('id', 'photo');
+        imgTag.setAttribute('src', obj.path);
+        photos.appendChild(imgTag)
+    })
+    XHR.open("POST", 'makephoto/savePhoto');
+    XHR.send(formData)
+  }
