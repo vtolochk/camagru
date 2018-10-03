@@ -8,10 +8,11 @@
 <body>
    <?php include 'header.php';?>
     <div class="makephoto-wrapper">
+        
         <form action='#' method='POST' onsubmit='return false;'>
             <div id='video-container'>
                 <video id='video'>Stream not available</video>
-                <div class="stickers">fdsa</div>
+                <div id='kaka'><img src="" alt=""></div>
                 <div class="photo-menu">
                     <button id='photo-but'>Take photo</button>
                     <div class='filters-wrapper'>
@@ -27,11 +28,16 @@
                 </div>
                 <canvas id='canvas'></canvas>
             </div>
-            <div class='bottom-container'>
-                <div id='photos'>
-                </div>
-            </div>
         </form>
+        <div class="stickers-wrapper"> 
+            <img class='sticker-img' src="/stickers/glasses.png" alt="glass sticker">
+            <img class='sticker-img' src="/stickers/samuel.png" alt="samuel sticker">
+            <img class='sticker-img' src="/stickers/glasses.png" alt="glass sticker">
+            <img class='sticker-img' src="/stickers/samuel.png" alt="samuel sticker">
+        </div>
+    </div>
+    <div class='bottom-container'>
+        <div id='photos'></div>
     </div>
     <?php include 'footer.php';?>
     <script src="/views/js/makephoto.js"></script>

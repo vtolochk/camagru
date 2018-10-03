@@ -11,6 +11,7 @@ const photos = document.getElementById('photos')
 const photoButton = document.getElementById('photo-but')
 const clearButton = document.getElementById('clear-but')
 const filters = document.getElementById('filters')
+const stickers = document.getElementsByClassName('stickers-wrapper')[0]
 
 // Get media stream
 navigator.mediaDevices.getUserMedia({video: true, audio: false}
@@ -24,6 +25,9 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false}
 .catch ( function (err) {
     console.log(`error: ${err}`)
 })
+
+// Add event listener for click on sticker
+stickers.addEventListener('click', addStickerToCanvas)
 
 
 // Play when ready
@@ -120,3 +124,16 @@ function sendRequest(imgUrl) {
     XHR.open("POST", 'makephoto/savePhoto');
     XHR.send(formData)
   }
+
+  function addStickerToCanvas(e) {
+      if (e.target.className === 'sticker-img') {
+        console.log('success')
+        let kaka = document.getElementById('kaka').getElementsByTagName('img')[0]
+        kaka.src = e.target.src
+        document.getElementById('kaka').style.display = 'flex'
+        // const context = canvas.getContext('2d')
+        // var image = new Image()
+        // image.scr = e.target.src
+        // context.drawImage(image, 0, 0, 200, 200)
+  }
+}
