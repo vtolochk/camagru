@@ -13,6 +13,7 @@ const clearButton = document.getElementById('clear-but')
 const filters = document.getElementById('filters')
 const stickers = document.getElementsByClassName('stickers-wrapper')[0]
 
+
 // Get media stream
 navigator.mediaDevices.getUserMedia({video: true, audio: false}
 ).then(function (stream) {
@@ -70,6 +71,9 @@ clearButton.addEventListener('click', function(e) {
     video.style.filter = filter
     // Reset select list
     filters.selectedIndex = 0
+    // Remove sticker from canvas
+    const stickerDivOnCanvas = document.getElementById('sticker')
+    stickerDivOnCanvas.style.display = 'none'
 })
 
 // Take picture from canvas
@@ -99,18 +103,24 @@ function takePicture() {
 }
 
 function sendRequest(imgUrl) {
+    const stickerDivOnCanvas = document.getElementById('sticker')
+    const stickerImgOnCanvas = stickerDivOnCanvas.getElementsByTagName('img')[0]
     let div = document.getElementsByClassName('makephoto-wrapper')
     let form = div[0].getElementsByTagName('form')
     let XHR = new XMLHttpRequest()
     let  formData = new FormData(form)
 
+   
     formData.append('img', imgUrl)
     formData.append('filter', video.style.filter)
-    formData.append('sticker', 'samuel.png')
+    if (stickerDivOnCanvas.style.display === 'flex') {
+        formData.append('sticker', stickerImgOnCanvas.src)
+    }
     XHR.addEventListener("load", function(event) {
-        //console.log('an = > ', event.target.responseText)
+        // console.log('an = > ', event.target.responseText)
         let obj = JSON.parse(event.target.responseText)
         // remove previous photo
+        console.log(obj)
         let prevImg = document.getElementById('photo')
         if (prevImg) {
            photos.removeChild(prevImg)
@@ -127,13 +137,9 @@ function sendRequest(imgUrl) {
 
   function addStickerToCanvas(e) {
       if (e.target.className === 'sticker-img') {
-        console.log('success')
-        let kaka = document.getElementById('kaka').getElementsByTagName('img')[0]
-        kaka.src = e.target.src
-        document.getElementById('kaka').style.display = 'flex'
-        // const context = canvas.getContext('2d')
-        // var image = new Image()
-        // image.scr = e.target.src
-        // context.drawImage(image, 0, 0, 200, 200)
+        const stickerDivOnCanvas = document.getElementById('sticker')
+        const stickerImgOnCanvas = stickerDivOnCanvas.getElementsByTagName('img')[0]
+        stickerImgOnCanvas.src = e.target.src
+        stickerDivOnCanvas.style.display = 'flex'
   }
 }

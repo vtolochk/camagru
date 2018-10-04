@@ -6,8 +6,64 @@ body {
 
 .gallery-wrapper {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr; 
     width: 100%;
     height: 85%;
     background-color: #363636;
+    overflow-y: scroll;
+    justify-content: center;
+}
+
+.post-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.post-container img {
+    border: 2px solid #00D5B6;
+    border-radius: 20px;
+}
+
+.post-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-and-date {
+    display: flex;
+    align-items: center;
+}
+
+.post-data {
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9FA;
+}
+
+.author-and-date span {
+    margin-right: 10px;
+}
+
+.likes-and-comments {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+}
+
+.post-text, i {
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9AA;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 5px;
+}
+
+.active-like {
+    color: 'white';
+    background-color: '#00D5B6';
+}
+
+i:hover {
+    cursor: pointer;
 }

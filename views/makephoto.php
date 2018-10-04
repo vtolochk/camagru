@@ -12,7 +12,7 @@
         <form action='#' method='POST' onsubmit='return false;'>
             <div id='video-container'>
                 <video id='video'>Stream not available</video>
-                <div id='kaka'><img src="" alt=""></div>
+                <div id='sticker'><img src="" alt=""></div>
                 <div class="photo-menu">
                     <button id='photo-but'>Take photo</button>
                     <div class='filters-wrapper'>
@@ -29,11 +29,15 @@
                 <canvas id='canvas'></canvas>
             </div>
         </form>
-        <div class="stickers-wrapper"> 
-            <img class='sticker-img' src="/stickers/glasses.png" alt="glass sticker">
+        <div class="stickers-wrapper">
             <img class='sticker-img' src="/stickers/samuel.png" alt="samuel sticker">
-            <img class='sticker-img' src="/stickers/glasses.png" alt="glass sticker">
-            <img class='sticker-img' src="/stickers/samuel.png" alt="samuel sticker">
+            <img class='sticker-img' src="/stickers/dog.png" alt="Dog sticker">
+            <img class='sticker-img' src="/stickers/cat.png" alt="Cat sticker">
+            <img class='sticker-img' src="/stickers/bruce.png" alt="Bruce Lee sticker">
+            <img class='sticker-img' src="/stickers/hercules.png" alt="Hercules sticker">
+            <img class='sticker-img' src="/stickers/ufo.png" alt="UFO sticker">
+            <img class='sticker-img' src="/stickers/elon.png" alt="Elon Musk sticker">
+            <img class='sticker-img' src="/stickers/will.png" alt="Will Smith sticker">
         </div>
     </div>
     <div class='bottom-container'>
