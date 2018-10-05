@@ -9,24 +9,49 @@
    <?php include 'header.php';?>
     <div class="gallery-wrapper">
         <?php
+            $i = 0;
             foreach ($allPhotos as $photo) {
                 $date = explode('/', $photo['path']);
                 $date = explode('_', $date[1]);
                 $date = $date[0] . '-' . $date[1] . '-' . $date[2];
                 echo "
                 <div class='post-container'>
-                    <img src='" . $photo['path'] . "' alt='user photo'></img>
+                    <img src='" . $photo['path'] . "' id='" . $photo['id'] . "'alt='user photo'></img>
                     <div class='post-bottom'>
                         <div class='author-and-date'>
-                            <span class='post-text'>Author: </span><span class='post-data'> " . $photo['owner'] . "</span>
+                            <span class='post-text'>Author: </span><span class='post-data'> " . $owners[$i]['name']['login'] . "</span>
                             <span class='post-text'>Date: </span><span class='post-data'> " . $date . "</span>
                         </div>
-                        <div class='likes-and-comments'>
-                            <i class='far fa-circle fa-heart fa-2x'></i>
-                            <i class='far fa-circle fa-comments fa-2x'></i>
+                        <div class='likes-and-comments'>";
+                            if ($allLikes[$i]['likes'] > 0 && $_SESSION['user_id'] == $allLikes[$i]['owner']) { 
+                                echo "<i class='fas fa-heart active-like' style='padding-right: 10px;'>";
+                            } else {
+                                echo "<i class='fas fa-heart style='padding-right: 10px;'>";
+                            }
+                             echo $allLikes[$i]['likes'] . "</i>
+                            <i class='fas fa-comments'></i>
+                        </div>
+                        <div class='comments-container'>
+                            <div class='previous-comments'>
+                            <span class='user-name'>
+
+                                vtolochk: 
+
+                            </span>
+                            <span class='user-text'>
+
+                                fdsafs
+                                
+                            </span>
+                            </div>
+                            <div class='input-and-button'>
+                                <input id='comment-input' type='text'/>
+                                <button class='add-comment-button'>Add comment</button>
+                            </div>
                         </div>
                     </div>
                 </div>";
+                $i++; 
             }
         ?>
     </div>

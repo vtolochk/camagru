@@ -14,7 +14,18 @@ token varchar(255));
 CREATE TABLE IF NOT EXISTS photos
 (id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 path varchar(255) NOT NULL,
-owner varchar(255));
+owner int(11));
+
+CREATE TABLE IF NOT EXISTS likes
+(id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+photoId int(11),
+owner int(11));
+
+CREATE TABLE IF NOT EXISTS comments
+(id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+comment varchar(255) NOT NULL,
+photoId int(11),
+owner int(11));
 
 INSERT INTO users (login, email, password, confirm) 
 VALUES

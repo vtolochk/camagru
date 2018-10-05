@@ -134,6 +134,17 @@ class User {
         return $data;
     }
 
+    public static function getUserById($id) {
+        $db = Database::getConnection();
+        $request = 'SELECT * FROM `users` WHERE id = :id';
+        $result = $db->prepare($request);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $data = $result->fetch();
+        return $data;
+    }
+
     public static function getUserByLogin($login) {
         $db = Database::getConnection();
         $request = 'SELECT * FROM `users` WHERE login = :login';

@@ -7,10 +7,14 @@ class Photos
         $sql = 'INSERT INTO `photos` (path, owner) VALUES (:path, :owner)';
         $base = $db->prepare($sql);
         $base->bindParam(':path', $path, PDO::PARAM_STR);
-        $base->bindParam(':owner', $owner, PDO::PARAM_STR);
+        $base->bindParam(':owner', $owner, PDO::PARAM_INT);
         $base->execute();
         return true;
     }
+
+    public static function removePhoto ($id) {
+
+    } 
     
     public static function getAllPhotos() {
         $db = Database::getConnection();

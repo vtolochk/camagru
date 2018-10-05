@@ -119,6 +119,7 @@ function sendRequest(imgUrl) {
     XHR.addEventListener("load", function(event) {
         // console.log('an = > ', event.target.responseText)
         let obj = JSON.parse(event.target.responseText)
+
         // remove previous photo
         console.log(obj)
         let prevImg = document.getElementById('photo')

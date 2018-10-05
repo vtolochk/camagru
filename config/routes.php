@@ -1,7 +1,6 @@
 <?php
 return array(
    
-    
     '^enrollment$' => 'enrollment/index',
     '^enrollment/confirm$' => 'enrollment/confirm',
     '^signup$' => 'enrollment/signup',
@@ -17,12 +16,15 @@ return array(
     '^restore/request/email$' => 'user/CheckYourEmail',
     '^restore/request/password(.*)$' => 'user/PasswordRestore',
 
-    '^gallery$' => 'gallery/index',
     '^makephoto$' => 'makephoto/index',
     '^makephoto/savePhoto$' => 'makephoto/savePhoto',
 
     '^restore(.*)$' => 'user/restore',
-    '^confirm(.*)$' => 'user/confirm'
+    '^confirm(.*)$' => 'user/confirm',
 
+    '^gallery$' => 'gallery/index',
+    '^gallery/addLike$' => 'gallery/addLike',
+    '^gallery/removeLike$' => 'gallery/removeLike',
+    '^gallery/addComment$' => 'gallery/addComment'
     
 );

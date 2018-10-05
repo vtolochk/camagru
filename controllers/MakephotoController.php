@@ -77,7 +77,7 @@ class MakephotoController {
 
 			// save changed image
 			imagepng($final_image,  $dir_name . $file_name);
-			Photos::addNewPhoto($dir_name . $file_name, $_SESSION['user_login']);
+			Photos::addNewPhoto($dir_name . $file_name, $_SESSION['user_id']);
 
 			// clean image
 			imagedestroy($final_image);
