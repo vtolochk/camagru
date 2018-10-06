@@ -89,4 +89,21 @@ class MakephotoController {
 		return true;
 	}
 
+	public function actionUploadPhoto () {
+		if (isset($_SESSION['user_id'])) {
+			$dir_name = 'photos/';
+			$file_name = date('Y_m_d') . '_' . rand(1, 10000) . '.png';
+			$upload_file_name = $dir_name . $file_name;
+			if (isset($_FILES['file'])) {
+				if ($_FILES['file']['size'] != 0 and $_FILES['file']['size'] <= 10240000) {
+					move_uploaded_file($_FILES['file']['tmp_name'], $upload_file_name);
+					// add file to data base
+
+					// return path to the file and show in the browser
+				}
+		}
+		return true;
+	}
+}
+
 }

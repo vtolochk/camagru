@@ -12,6 +12,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     Array.from(document.getElementsByClassName('add-comment-button')).forEach( (elem) => {
         elem.addEventListener('click', getNewComment)
     })
+
+    Array.from(document.getElementsByClassName('fa-times-circle')).forEach( (elem) => {
+        elem.addEventListener('click', removePhoto)
+    })
+    
 })
 
 function handleLike(e) {
@@ -70,17 +75,36 @@ function handleComment(e) {
     e.preventDefault()
 }
 
-function sendComment (comment, photoId, owner) {
+function sendComment (comment, photoId, e) {
     let XHR = new XMLHttpRequest()
     let data = new FormData()
 
     // adding data to the form
-    data.append('comment', comment)
+    data.append('comment', comment.value)
     data.append('photoId', photoId)
 
     // get response from the server
     XHR.addEventListener('load', (event) => {
-        console.log(event.target.responseText)
+        let obj = JSON.parse(event.target.responseText)
+        console.log(obj)
+        if (obj.comment.length > 0) {
+
+            // add comment to the front page
+            let userName = document.createElement('span')
+            userName.setAttribute('class', 'user-name')
+            userName.innerHTML = obj.owner.concat(': ')
+
+            let userComment = document.createElement('span')
+            userComment.setAttribute('class', 'user-text')
+            userComment.innerHTML = obj.comment
+            
+            e.appendChild(userName)
+            e.appendChild(userComment)
+            e.appendChild(document.createElement('br'))
+            comment.value = ''
+        } else {
+            // do nothing
+        }
     })
 
     // send ajax request
@@ -89,15 +113,28 @@ function sendComment (comment, photoId, owner) {
 }
 
 function getNewComment(e) {
-
-    let comment = document.getElementById('comment-input').value
-
-    if (comment.length > 0) {
-
+    const comment = e.target.parentNode.getElementsByTagName('input')[0]
+    if (comment.value.length > 0) {
         // add comment to the data base 
         const photoId = e.target.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('img')[0].id
-        sendComment(comment, photoId)
-
+        sendComment(comment, photoId, e.target.parentNode.parentNode.getElementsByClassName('previous-comments')[0])
         // add comment to the front page
+
     }
+}
+
+function removePhoto(e) {
+    let id = e.target.parentNode.parentNode.parentNode.getElementsByTagName('img')[0].id
+    let XHR = new XMLHttpRequest()
+    let data = new FormData()
+    data.append('id', id)
+
+    XHR.addEventListener('load', (event) => {
+        //remove post if success
+        e.target.parentNode.parentNode.parentNode.style.display = 'none';
+        console.log(event.target.responseText)
+    })
+
+    XHR.open('POST', 'gallery/removeComment')
+    XHR.send(data)
 }

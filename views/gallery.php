@@ -29,20 +29,19 @@
                                 echo "<i class='fas fa-heart style='padding-right: 10px;'>";
                             }
                              echo $allLikes[$i]['likes'] . "</i>
-                            <i class='fas fa-comments'></i>
-                        </div>
+                            <i class='fas fa-comments'></i>";
+                            if ($_SESSION['user_login'] == $owners[$i]['name']['login']) {
+                                echo "<i class='fas fa-times-circle'></i>";
+                            }
+                        echo "</div>
                         <div class='comments-container'>
-                            <div class='previous-comments'>
-                            <span class='user-name'>
-
-                                vtolochk: 
-
-                            </span>
-                            <span class='user-text'>
-
-                                fdsafs
-                                
-                            </span>
+                            <div class='previous-comments'>";
+                            foreach ($comments[$i] as $comment) {
+                                echo "<span class='user-name'>" . $comment['commentOwner'] . ': </span>';
+                                echo "<span class='user-text'>" . $comment['commentText'];
+                                echo "</br>";
+                            }
+                            echo "</span>
                             </div>
                             <div class='input-and-button'>
                                 <input id='comment-input' type='text'/>

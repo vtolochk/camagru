@@ -14,6 +14,8 @@
                 <video id='video'>Stream not available</video>
                 <div id='sticker'><img src="" alt=""></div>
                 <div class="photo-menu">
+                    <input id='upload-file' type="file" name="pic" accept="image/*">
+                    <input id='upload-submit' type="submit" value='Upload Photo'>
                     <button id='photo-but'>Take photo</button>
                     <div class='filters-wrapper'>
                     <select id='filters'>

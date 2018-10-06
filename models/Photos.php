@@ -12,10 +12,26 @@ class Photos
         return true;
     }
 
-    public static function removePhoto ($id) {
+    public static function removePhotoByPhotoId ($photoId) {
+        $db = Database::getConnection();
+        $sql = 'DELETE FROM `photos` WHERE id = :photoId';
+        $base = $db->prepare($sql);
+        $base->bindParam(':photoId', $photoId, PDO::PARAM_INT);
+        $base->execute();
+        return true;
+    }
 
-    } 
-    
+    public static function getPhotoInfo($photoId) {
+        $db = Database::getConnection();
+        $sql = 'SELECT * FROM `photos` WHERE id = :photoId';
+        $base = $db->prepare($sql);
+        $base->bindParam(':photoId', $photoId, PDO::PARAM_INT);
+        $base->setFetchMode(PDO::FETCH_ASSOC);
+        $base->execute();
+        $data = $base->fetch();
+        return $data;
+    }
+
     public static function getAllPhotos() {
         $db = Database::getConnection();
         $stmt = $db->query('SELECT * FROM photos');

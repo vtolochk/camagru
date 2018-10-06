@@ -12,7 +12,36 @@ const photoButton = document.getElementById('photo-but')
 const clearButton = document.getElementById('clear-but')
 const filters = document.getElementById('filters')
 const stickers = document.getElementsByClassName('stickers-wrapper')[0]
+const uploadButton = document.getElementById('upload-submit')
+const uploadFile = document.getElementById('upload-file')
 
+
+function sendFile(file) {
+    let XHR = new XMLHttpRequest()
+    let data = new FormData()
+
+    // adding data to the form
+    data.append('file', file)
+
+    // // get response from the server
+    XHR.addEventListener('load', (event) => {
+        console.log(event.target.responseText)
+    })
+
+    // send ajax request
+    XHR.open('POST', 'makephoto/uploadPhoto')
+    XHR.send(data)
+}
+
+function uploadPhoto(e) {
+    
+    if (uploadFile.files.length > 0) {
+        const file = uploadFile.files[0]
+        console.log(file)
+        sendFile(file)
+    }
+    
+}
 
 // Get media stream
 navigator.mediaDevices.getUserMedia({video: true, audio: false}
@@ -30,6 +59,8 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false}
 // Add event listener for click on sticker
 stickers.addEventListener('click', addStickerToCanvas)
 
+// Add event listener for click on upload file
+uploadButton.addEventListener('click', uploadPhoto)
 
 // Play when ready
 video.addEventListener('canplay', function (e) {
@@ -143,4 +174,6 @@ function sendRequest(imgUrl) {
         stickerImgOnCanvas.src = e.target.src
         stickerDivOnCanvas.style.display = 'flex'
   }
+
+ 
 }

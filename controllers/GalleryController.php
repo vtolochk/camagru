@@ -7,7 +7,6 @@ include_once ROOT . '/models/Comments.php';
 
 class GalleryController 
 {
-
 	public function actionIndex() {
 
 		// get all images from data base
@@ -16,7 +15,7 @@ class GalleryController
 		// get all likes from the base
 		$allLikes = array();
 		$owners = array();
-		$comments = array();
+		$commentsFromBase = array();
 
 		// some stupid magic here
 		$j = 0;
@@ -24,20 +23,21 @@ class GalleryController
 			$comment = Comments::getCommentsByPhotoId($photo['id']);
 			$likes = Likes::getNumberOfLikesByPhotoId($photo['id']);
 			$owner = Likes::getOwnerOfThePhoto($photo['id'], $_SESSION['user_id']);
-
-			array_push($comments, $comment);
+			array_push($commentsFromBase, $comment);
 			array_push($owners, array('name' => User::getUserById($photo['owner'])));
 			array_push($allLikes, array('owner' => $owner, 'likes' => $likes));
 			$j++;
 		}
-
-
-		echo "<pre>";
-		var_dump($comments);
-		echo "</pre>";
-		die(); // work here
-
-
+		$comments = array();
+		foreach ($commentsFromBase as $comment) {
+			$postComments = array();
+			foreach ($comment as $subcomment) {
+				$commentOwner = User::getUserById($subcomment['owner'])['login'];
+				$commentText = $subcomment['comment'];
+				array_push($postComments, array('commentOwner' => $commentOwner, 'commentText' => $commentText));
+			}
+			array_push($comments, $postComments);
+		}
 		require_once(ROOT . '/views/gallery.php');
 		return true;
 	}
@@ -75,6 +75,8 @@ class GalleryController
 	public function actionAddComment() {
 		if ($_SESSION['user_login']) {
 
+			// need to validate input by regexp or try maybe it shouldnt 
+
 			// get info for inserting to the data base
 			$owner = $_SESSION['user_id'];
 			$comment = $_POST['comment'];
@@ -84,10 +86,34 @@ class GalleryController
 			Comments::addComment($comment, $photoId, $owner);
 
 			// send notisfication if they set
-			
+			echo json_encode(array('comment' => $comment, 'owner' => $_SESSION['user_login']));
 		} else {
+			echo json_encode(array('fail'));
 			// return that user cannot like photo until he log in
 		}
 		return true;
+	}
+
+	public function actionRemoveComment () {
+		if ($_SESSION['user_login']) {
+
+			$photoId = $_POST['id'];
+
+			// remove likes
+			Likes::removeAllLikesByPhotoId($photoId);
+
+			// remove comments
+			Comments::removeAllCommentsByPhotoId($photoId);
+
+			// remove photo from the disk
+			$photoPath = Photos::getPhotoInfo($photoId)['path'];
+			unlink($photoPath);
+
+			// remove photo from the data base
+			Photos::removePhotoByPhotoId($photoId);
+			
+			return true;
+		}
+		// else return false??
 	}
 }

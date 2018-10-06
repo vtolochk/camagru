@@ -18,6 +18,7 @@ return array(
 
     '^makephoto$' => 'makephoto/index',
     '^makephoto/savePhoto$' => 'makephoto/savePhoto',
+    '^makephoto/uploadPhoto$' => 'makephoto/uploadPhoto',
 
     '^restore(.*)$' => 'user/restore',
     '^confirm(.*)$' => 'user/confirm',
@@ -25,6 +26,7 @@ return array(
     '^gallery$' => 'gallery/index',
     '^gallery/addLike$' => 'gallery/addLike',
     '^gallery/removeLike$' => 'gallery/removeLike',
-    '^gallery/addComment$' => 'gallery/addComment'
+    '^gallery/addComment$' => 'gallery/addComment',
+    '^gallery/removeComment$' => 'gallery/removeComment'
     
 );

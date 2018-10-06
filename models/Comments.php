@@ -24,5 +24,14 @@ class Comments
         $base->execute();
         $data = $base->fetchAll();
         return $data;
-    }  
+    }
+
+    public static function removeAllCommentsByPhotoId($photoId) {
+        $db = Database::getConnection();
+        $sql = 'DELETE FROM `comments` WHERE photoId = :photoId';
+        $base = $db->prepare($sql);
+        $base->bindParam(':photoId', $photoId, PDO::PARAM_INT);
+        $base->execute();
+        return true;
+    }
 }

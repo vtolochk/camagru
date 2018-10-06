@@ -49,8 +49,8 @@ body {
     padding: 10px;
 }
 
-#photo-but, #clear-but{
-  background-color: #00D5B6;
+#photo-but, #clear-but, #upload-file, #upload-submit {
+    background-color: #00D5B6;
     border: none;
     color: white;
     padding: 10px 25px;
@@ -66,16 +66,10 @@ body {
     white-space: nowrap;
 }
 
-#clear-but:hover {
+#clear-but:hover, #photo-but:hover, #upload-file:hover, #upload-submit:hover {
     opacity: 1;
     cursor: pointer;
 }
-
-#photo-but:hover {
-    opacity: 1;
-    cursor: pointer;
-}
-
 
 .stickers-wrapper
  {

@@ -44,4 +44,14 @@ class Likes
         $data = $base->fetchAll();      
         return count($data);
     }   
+
+    public static function removeAllLikesByPhotoId($photoId) {
+        $db = Database::getConnection();
+        $sql = 'DELETE FROM `likes` WHERE photoId = :photoId';
+        $base = $db->prepare($sql);
+        $base->bindParam(':photoId', $photoId, PDO::PARAM_INT);
+        $base->execute();
+        return true;
+    }
+
 }
