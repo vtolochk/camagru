@@ -12,6 +12,142 @@ body {
     background-color: #363636;
 }
 
+.gallery-wrapper {
+    display: grid;
+    grid-template-rows: 1fr; 
+    width: 100%;
+    height: 85%;
+    background-color: #363636;
+    overflow-y: scroll;
+    justify-content: center;
+}
+
+.post-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.post-container img {
+    border: 2px solid #00D5B6;
+    border-radius: 20px;
+}
+
+.post-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-and-date {
+    display: flex;
+    align-items: center;
+}
+
+.post-data {
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9FA;
+}
+
+.author-and-date span {
+    margin-right: 10px;
+}
+
+.likes-and-comments {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+}
+
+.likes-and-comments i {
+    font-size: 25px;
+}
+
+.likes-and-comments i:before {
+    padding-right: 10;
+}
+
+.post-text, i {
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9AA;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 5px;
+}
+
+.active-like {
+    color: rgba(255, 38, 0, 0.801);
+}
+
+.active-comment {
+    color: rgba(0, 162, 255, 0.801);
+}
+
+.active-comments-container {
+    display: flex !important;
+}
+
+.comments-container {
+    margin-top: 10px;
+    display: none;
+    height: fit-content;
+    flex-flow: column;
+    justify-content: center;
+}
+
+i:hover {
+    cursor: pointer;
+}
+
+#comment-input {
+    width: 80%;
+    font-size: 20px;
+    padding-left: 5px;
+    outline: none;
+}
+
+
+.add-comment-button {
+    background-color: #00D5B6;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 20%;
+    font-size: 16px;
+    opacity: 0.8;
+    transition: 0.3s;
+    outline: 0;
+    height: 40px;
+    white-space: nowrap;
+}
+
+.input-and-button {
+    display: flex;
+    justify-content: center;
+}
+
+.user-name {
+    font-family: "Comic Sans MS", sans-serif;
+    color: #ABA9FA;
+    font-size: 23px;
+}
+
+.previous-comments {
+    padding-right: 10px;
+    padding-bottom: 15px;
+}
+
+.user-text {
+    display: block;
+    word-wrap: break-word;
+    font-family: "Comic Sans MS", sans-serif;
+    color: #d5ebe9;
+    width: 600px;
+}
+
 @media only screen and (max-width: 414px) {
     .banner {
         display: none;

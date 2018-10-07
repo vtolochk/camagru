@@ -127,3 +127,8 @@ body {
     width: 175px;
     height: 175px;
 }
+
+#upload-submit {
+    padding-right: 0;
+    padding-left: 0;
+}

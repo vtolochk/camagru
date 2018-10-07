@@ -25,7 +25,11 @@ function sendFile(file) {
 
     // // get response from the server
     XHR.addEventListener('load', (event) => {
-        console.log(event.target.responseText)
+        if (event.target.responseText === 'success') {
+            alert('Success')
+        } else {
+            alert('Invalid file')
+        }
     })
 
     // send ajax request
@@ -36,9 +40,7 @@ function sendFile(file) {
 function uploadPhoto(e) {
     
     if (uploadFile.files.length > 0) {
-        const file = uploadFile.files[0]
-        console.log(file)
-        sendFile(file)
+        sendFile(uploadFile.files[0])
     }
     
 }

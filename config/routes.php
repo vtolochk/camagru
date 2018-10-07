@@ -1,6 +1,8 @@
 <?php
 return array(
    
+    '^IsUserLoggedIn$' => 'index/IsUserLoggedIn',
+
     '^enrollment$' => 'enrollment/index',
     '^enrollment/confirm$' => 'enrollment/confirm',
     '^signup$' => 'enrollment/signup',

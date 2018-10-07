@@ -221,6 +221,35 @@ class User {
         return $error;
     }
 
+    public static function sendNotisficationEmail($email, $user) {
+        $encoding  = "utf-8";
+        $emailSubject = "Photo Creator notisfication";
+        $subjectPreferences = array(
+            "input-charset" => $encoding,
+            "output-charset" => $encoding,
+            "line-length" => 76,
+            "line-break-chars" => "\r\n"
+        );
+        $message = '
+        <html>
+            <head>
+            </head>
+            <body>
+                <div style="text-align: center;font-family: \'Lato\', \'appleLogo\', sans-serif">
+                    <h1>Hey ' . $user . ', you have a new comment below your photo!</h1>
+                </div>
+            </body>
+        </html>
+        ';
+        $emailHeader = "Content-type: text/html; charset=".$encoding." \r\n";
+        $emailHeader .= "From: Photo Creator <no-reply@photoCreator.com> \r\n";
+        $emailHeader .= "MIME-Version: 1.0 \r\n";
+        $emailHeader .= "Content-Transfer-Encoding: 8bit \r\n";
+        $emailHeader .= "Date: ".date("r (T)")." \r\n";
+        $emailHeader .= iconv_mime_encode("Subject", $emailSubject, $subjectPreferences);
+        mail($email, $emailSubject, $message, $emailHeader);
+    }
+
     public static function setLogin($id, $login) {
         $db = Database::getConnection();
         $sql = "UPDATE `users` SET login = :login WHERE id = :id";
@@ -268,11 +297,4 @@ class User {
         $base->execute();
     }
 
-
-    // public static function getAllUsers() {
-    //     $db = Database::getConnection();
-    //     $stmt = $db->query('SELECT * FROM users');
-	// 	$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //     return $res;
-    // }
 }

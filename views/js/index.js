@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // when document loaded
     // add event listeners for all hearts and comments on the site
     Array.from(document.getElementsByClassName('fa-heart')).forEach( (elem) => {
-        elem.addEventListener('click', handleLike)
+        elem.addEventListener('click', isUserLoggedInWhenLike)
     })
 
     Array.from(document.getElementsByClassName('fa-comments')).forEach( (elem) => {
-        elem.addEventListener('click', handleComment)
+        elem.addEventListener('click', isUserLoggedInWhenComment)
     })
 
     Array.from(document.getElementsByClassName('add-comment-button')).forEach( (elem) => {
@@ -19,32 +19,61 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
 })
 
+function isUserLoggedInWhenLike(event) {
+    let XHR = new XMLHttpRequest()
+
+    XHR.addEventListener('load', (e) => {
+       if (e.target.responseText === 'success') {
+            handleLike(event)
+       } else {
+            window.location.href = 'enrollment'
+       }
+    })
+
+    // send ajax request
+    XHR.open('POST', 'IsUserLoggedIn')
+    XHR.send()
+}
+
+function isUserLoggedInWhenComment(event) {
+    let XHR = new XMLHttpRequest()
+
+    XHR.addEventListener('load', (e) => {
+       if (e.target.responseText === 'success') {
+            handleComment(event)
+       } else {
+            window.location.href = 'enrollment'
+       }
+    })
+
+    // send ajax request
+    XHR.open('POST', 'IsUserLoggedIn')
+    XHR.send()
+}
+
 function handleLike(e) {
 
     // geting photo id from the post
     const photoId = e.target.parentNode.parentNode.parentNode.getElementsByTagName('img')[0].id
-
-    if (e.target.classList.contains('active-like')) {
-
-        // add front view for like
+     if (e.target.classList.contains('active-like')) {
+         // add front view for like
         e.target.classList.remove('active-like')
         e.target.innerHTML = Number(e.target.innerHTML) - +1
 
         // remove record from the date base
-        sendLike(photoId, 'gallery/removeLike')
+         sendLike(photoId, 'gallery/removeLike')
     } else {
 
         // add front view for like
         e.target.classList.add('active-like')
         e.target.innerHTML = Number(e.target.innerHTML) + +1
-
+    
         // add record to the data base
         sendLike(photoId, 'gallery/addLike')
     }
     e.stopPropagation()
     e.preventDefault()
 }
-
 
 function sendLike (photoId, path) {
     let XHR = new XMLHttpRequest()

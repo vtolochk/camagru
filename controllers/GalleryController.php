@@ -75,18 +75,26 @@ class GalleryController
 	public function actionAddComment() {
 		if ($_SESSION['user_login']) {
 
-			// need to validate input by regexp or try maybe it shouldnt 
-
 			// get info for inserting to the data base
 			$owner = $_SESSION['user_id'];
 			$comment = $_POST['comment'];
 			$photoId = $_POST['photoId'];
 
-			// add comment to the data base
-			Comments::addComment($comment, $photoId, $owner);
+			// validate comment
+			if (!preg_match("/[a-zA-Z0-9.-]/", $comment) || preg_match("/</", $comment)) {
+				echo json_encode(array('fail'));
+			} else {
+				// add comment to the data base
+				Comments::addComment($comment, $photoId, $owner);
 
-			// send notisfication if they set
-			echo json_encode(array('comment' => $comment, 'owner' => $_SESSION['user_login']));
+				// send notisfication if they set
+				$photo = Photos::getPhotoInfo($photoId);
+				$user =  User::getUserById($photo['owner']);
+				if ($user['notisfications'] == 1 && $user['login'] !== $_SESSION['user_login']) {
+					User::sendNotisficationEmail($user['email'], $user['login']);
+				}
+				echo json_encode(array('comment' => $comment, 'owner' => $_SESSION['user_login']));
+			}
 		} else {
 			echo json_encode(array('fail'));
 			// return that user cannot like photo until he log in

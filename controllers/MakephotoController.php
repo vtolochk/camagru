@@ -97,9 +97,12 @@ class MakephotoController {
 			if (isset($_FILES['file'])) {
 				if ($_FILES['file']['size'] != 0 and $_FILES['file']['size'] <= 10240000) {
 					move_uploaded_file($_FILES['file']['tmp_name'], $upload_file_name);
+
 					// add file to data base
+					Photos::addNewPhoto($upload_file_name, $_SESSION['user_id']);
 
 					// return path to the file and show in the browser
+					echo 'success';
 				}
 		}
 		return true;
